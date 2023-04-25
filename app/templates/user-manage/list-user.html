@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+
+{% block title %}API Dashboard{% endblock %}
+
+
+{% block content %} 
+ <!-- ======== sidebar-nav start =========== -->
+    {% include 'partials/sidebar-nav.html' %}
+    <div class="overlay"></div>
+    <!-- ======== sidebar-nav end =========== -->
+
+    <!-- ======== main-wrapper start =========== -->
+    <main class="main-wrapper">
+      <!-- ========== header start ========== -->
+      {% include 'partials/header.html' %}
+      <!-- ========== header end ========== -->
+
+     <!-- ========== table components start ========== -->
+     <section class="table-components">
+      <div class="container-fluid">
+        <!-- ========== title-wrapper start ========== -->
+        <div class="title-wrapper pt-30">
+          <div class="row align-items-center">
+            <div class="col-md-6">
+              <div class="title mb-30">
+                <h2>User Manage</h2>
+              </div>
+            </div>
+            <!-- end col -->
+            <div class="col-md-6">
+              <div class="breadcrumb-wrapper">
+                <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                      <a href="/">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                      User Manage
+                    </li>
+                  </ol>
+                </nav>
+              </div>
+            </div>
+            <!-- end col -->
+          </div>
+          <!-- end row -->
+           <div class="row align-items-center">
+            <div class="col-md-6">
+            </div>
+            <!-- end col -->
+            <div class="col-md-6">
+              <div class="breadcrumb-wrapper">
+                <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                      <a href="/admin/user-manage/trash" style="font-size: 30px;"><i class="lni lni-trash-can"></i></a>
+                    </li>
+                  </ol>
+                </nav>
+              </div>
+            </div>
+            <!-- end col -->
+          </div>
+        </div>
+        <!-- ========== title-wrapper end ========== -->
+
+        <!-- ========== tables-wrapper start ========== -->
+        <div class="tables-wrapper">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="card-style mb-30">
+                <div class="table-wrapper table-responsive">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th><h6></h6></th>
+                        <th><h6>Fullname</h6></th>
+                        <th><h6>Email</h6></th>
+                        <th><h6>Role</h6></th>
+                        <th><h6>Status account</h6></th>
+                        <th><h6>Action</h6></th>
+                      </tr>
+                      <!-- end table row-->
+                    </thead>
+                    <tbody>
+                      {% for user in users %}
+                       <tr>
+                        <td>
+                          <div class="employee-image">
+                            <img
+                            src="{{ user.avatar }}"alt="" />
+                          </div>
+                        </td>
+                        <td class="min-width">
+                          <p>{{user.fullname}}</p>
+                        </td>
+                        <td class="min-width">
+                          <p><a href="#0">{{user.email}}</a></p>
+                        </td>
+                        <td class="min-width">
+                          <p>{{ user.Role.roleName }}</p>
+                        </td>
+                        <td class="min-width">
+                          <span class="status-btn active-btn">Active</span>
+                        </td>
+                        <td>
+                          <div class="action">
+                            <button class="text-primary" onclick="updateUser(this)" data-userid="{{user.id}}">
+                              <i class="lni lni-pencil-alt"></i>
+                            </button>
+                            {% if user.username != request.cookies.get('username') %}
+                              <button class="text-danger" onclick="deleteUser(this)" data-userid="{{user.id}}">
+                                <i class="lni lni-trash-can"></i>
+                              </button>
+                            {% endif  %}
+                          </div>
+                        </td>
+                      </tr>
+                      {% endfor %}
+                      <!-- end table row -->
+                    </tbody>
+                  </table>
+                  <!-- end table -->
+                </div>
+              </div>
+              <!-- end card -->
+            </div>
+            <!-- end col -->
+          </div>
+          <!-- end row -->
+        </div>
+        <!-- ========== tables-wrapper end ========== -->
+      </div>
+      <!-- end container -->
+    </section>
+    <!-- ========== table components end ========== -->
+<!-- ========== footer start =========== -->
+{% include 'partials/footer.html' %}
+<!-- ========== footer end =========== -->
+</main>
+<!-- ======== main-wrapper end =========== -->
+{% endblock %} 
