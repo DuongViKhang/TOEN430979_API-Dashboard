@@ -1,42 +1,38 @@
 version: '3.8'
 
 services:
-  web-container:
-    image: flask-python/api-dashboard:v1.0.0
-    container_name: web-container
+  flask-container:
+    image: doduongthaituan/api-dashboard:v1.0.0
+    container_name: flask-container
+    environment:
+      - SQLALCHEMY_DATABASE_URI=postgresql://postgres:1@postgres-container:5433/ApiDashboardDB
     ports:
       - 50001:50000
     depends_on:
-      db-container:
-        condition: service_healthy
-    # networks:
-    #   - postgres-python-network
+      - postgres-container
+    networks:
+      api-dashboard-network:
+    volumes:
+      - app:/api-dashboard
   
-  db-container:
-    image: postgres:14
-    restart: always
-    container_name: db-container
+  postgres-container:
+    image: doduongthaituan/my-postgres:v1.0.0
+    container_name: postgres-container
     environment:
-      POSTGRES_USER: docker
-      POSTGRES_DB: web
+      POSTGRES_DB: ApiDashboardDB
       POSTGRES_PASSWORD: 1
       PGPORT: 5433
     ports:
       - 5434:5433
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready"]
-      interval: 1m30s
-      timeout: 30s
-      retries: 5
-      start_period: 30s
-    # volumes:
-    #   - pgdata-volume:/var/lib/postgresql
+    networks:
+      api-dashboard-network:
 
-  # networks:
-  #   postgres-python-network:
-  #     name: postgres-python-network    
+networks:
+  api-dashboard-network:
+    name: api-dashboard-network
+    driver: bridge
 
-  # volumes:
-  #   pgdata-volume:
+volumes:
+  app:
   
-      
+     
