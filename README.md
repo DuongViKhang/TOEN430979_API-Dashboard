@@ -95,7 +95,7 @@
 
 2. Clone project
 ```
-git clone https://github.com/tuanhcmute/Nhom1_CCPTPM
+git clone https://github.com/DuongViKhang/TOEN430979_API-Dashboard
 ```
 
 3. Run commands:\
@@ -139,7 +139,7 @@ flask run
 ### Setup project with docker <a name="docker"></a>
 1. Clone project
 ```
-git clone https://github.com/tuanhcmute/Nhom1_CCPTPM
+git clone https://github.com/DuongViKhang/TOEN430979_API-Dashboard
 ```
 2. Run docker-compose file
 ```
