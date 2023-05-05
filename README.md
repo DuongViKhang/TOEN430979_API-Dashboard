@@ -20,8 +20,8 @@
 
 > ## Members :relaxed:: <a name="members"></a>
 
-- [Trần Chí Mỹ - 20110202](https://github.com/mytranchi)
-- [Đỗ Dương Thái Tuấn - 20110743](https://github.com/tuanhcmute)
+- [Dương Vĩ Khang - 20110656]
+- [Nguyễn Thành Lợi - 20110674]
 
 > ## Overview <a name="overview"></a>
 
@@ -176,13 +176,13 @@ pip freeze > requirements.txt
 > If you have any question, please contact us through email:
 
 ```js
-20110743@student.hcmute.edu.vn
+20110656@student.hcmute.edu.vn
 ```
 
 or
 
 ```js
-20110202@student.hcmute.edu.vn
+20110674@student.hcmute.edu.vn
 ```
 
 ### Thanks for watching :relaxed::relaxed::relaxed::relaxed:
