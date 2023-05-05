@@ -123,7 +123,7 @@ pip install -r requirements.txt
 3.4. Load all config from .env file
 
 ```
-source.env
+source .env
 ```
 
 3.5. [Download postgresQL](https://www.postgresql.org/download/) and config username password in postgresQL
