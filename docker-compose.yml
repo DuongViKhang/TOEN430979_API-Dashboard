@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   flask-container:
-    image: doduongthaituan/api-dashboard:v1.0.0
+    image: duongvikhang/api-dashboard:v1.0.0
     container_name: flask-container
     environment:
       - SQLALCHEMY_DATABASE_URI=postgresql://postgres:1@postgres-container:5433/ApiDashboardDB
@@ -16,7 +16,7 @@ services:
       - app:/api-dashboard
   
   postgres-container:
-    image: doduongthaituan/my-postgres:v1.0.0
+    image: duongvikhang/my-postgres:v1.0.0
     container_name: postgres-container
     environment:
       POSTGRES_DB: ApiDashboardDB
