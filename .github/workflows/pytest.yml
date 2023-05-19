@@ -16,6 +16,11 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: 3.10.10
+      - name: Install Chrome WebDriver
+        run: |
+          LATEST_CHROMEDRIVER_VERSION=$(curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE)
+          curl -L -o chromedriver.zip "https://chromedriver.storage.googleapis.com/$LATEST_CHROMEDRIVER_VERSION/chromedriver_linux64.zip"
+          unzip chromedriver.zip -d $HOME/.local/bin
           
       - name: Install dependencies
         run: |
@@ -23,11 +28,6 @@ jobs:
           pip install pytest-html
           pip install selenium
 
-      - name: Install Chrome WebDriver
-        run: |
-          LATEST_CHROMEDRIVER_VERSION=$(curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE)
-          curl -L -o chromedriver.zip "https://chromedriver.storage.googleapis.com/$LATEST_CHROMEDRIVER_VERSION/chromedriver_linux64.zip"
-          unzip chromedriver.zip -d $HOME/.local/bin
       - name: Run tests
         run: |
           cd tests
