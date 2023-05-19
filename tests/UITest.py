@@ -3,11 +3,20 @@ from selenium.webdriver.common.by import By
 import pytest
 import requests
 import logging
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
 # Fixture setup
 @pytest.fixture(scope="module")
 def driver():
-    # Khởi tạo WebDriver (ở đây dùng Chrome)
-    driver = webdriver.Chrome()
+    # Cài đặt các tùy chọn cho Chrome WebDriver
+    chrome_options = Options()
+    chrome_options.add_argument("--headless")  # Chạy trình duyệt ẩn danh
+
+    # Đường dẫn đến Chrome WebDriver (Phải là đường dẫn tới chromedriver trong Github Actions)
+    webdriver_service = Service('/driver/')  # Thay thế đường dẫn tới chromedriver
+
+    # Khởi tạo trình điều khiển Chrome
+    driver = webdriver.Chrome(service=webdriver_service, options=chrome_options)
     yield driver
     # Teardown - Đóng trình duyệt sau khi hoàn thành
     driver.quit()
