@@ -3,7 +3,7 @@ name: Run Tests
 on:
   pull_request:
     branches:
-      - main
+      - Loi
 
 jobs:
   tests:
@@ -22,7 +22,12 @@ jobs:
           pip install -r requirements.txt
           pip install pytest-html
           pip install selenium
-
+          
+      - name: Install Chrome WebDriver
+        run: |
+          LATEST_CHROMEDRIVER_VERSION=$(curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE)
+          curl -L -o chromedriver.zip "https://chromedriver.storage.googleapis.com/$LATEST_CHROMEDRIVER_VERSION/chromedriver_linux64.zip"
+          unzip chromedriver.zip -d $HOME/.local/bin
       - name: Run tests
         run: |
           cd tests
