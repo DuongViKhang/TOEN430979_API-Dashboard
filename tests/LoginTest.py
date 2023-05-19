@@ -59,9 +59,8 @@ class LoginTestSelenium:
                 message = self.driver.find_element(By.XPATH, "//div[@class='alert alert-danger']")
                 # In ra thông báo
                 logging.error("Đăng nhập thất bại. Thông báo lỗi là %s", message.text)
-            except NoSuchElementException:
-                # Xử lý khi không tìm thấy element
-                print("Không tìm thấy element")
+            except NoSuchElementException as e:
+                logging.error("{e}")
         logging.info("")
 
     def run_test_case(self, username, password, user, screenshot_name):
@@ -107,3 +106,6 @@ def test_case4(login_fixture):
 def test_case5(login_fixture):
     case = {'username': 'tEsT1', 'password': 'test', 'user': True, 'screenshot_name': 'testcase5'}
     login_fixture.run_test_case(case['username'], case['password'], case['user'], case['screenshot_name'])
+    
+
+
