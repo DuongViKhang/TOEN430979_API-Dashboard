@@ -59,7 +59,7 @@ jobs:
               git clone https://github.com/DuongViKhang/TOEN430979_API-Dashboard.git && \echo "Clone completed"
             fi
             sudo apt-get update && sudo apt-get upgrade -y
-            cd Nhom1_CCPTPM
+            cd TOEN430979_API-Dashboard
             sudo docker-compose -f ./docker-compose.yml down -v
             sudo docker rm duongvikhang/api-dashboard:v1.0.0 -f || true
             sudo docker rmi duongvikhang/api-dashboard:v1.0.0 -f || true
