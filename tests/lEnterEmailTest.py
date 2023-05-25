@@ -4,6 +4,7 @@ from selenium.webdriver.common.by import By
 import os
 import logging
 import pytest
+from selenium.webdriver.chrome.options import Options
 # Tạo thư mục logs nếu chưa tồn tại
 if not os.path.exists('logs'):
     os.makedirs('logs')
@@ -24,7 +25,11 @@ if not os.path.exists(image_dir):
 
 class EnterEmailTestSelenium:
     def __init__(self, url):
-        self.driver = webdriver.Chrome()
+        options = Options()
+        options.add_argument('--headless')
+        options.add_argument('--no-sandbox')
+        options.add_argument('--disable-dev-shm-usage')
+        self.driver = webdriver.Chrome(options=options)
         self.driver.get(url)
 
     def get_screen_shot(self, name):
@@ -39,7 +44,7 @@ class EnterEmailTestSelenium:
         self.driver.find_element(By.ID, "email").send_keys(email)
         time.sleep(1)
         sentOTP = self.driver.find_element(By.XPATH,"//button[@type='submit']")
-        sentOTP.click()
+        self.driver.execute_script("arguments[0].click();", sentOTP)
         time.sleep(5)
         # So sánh địa chỉ URL trước và sau khi đăng nhập
         if self.driver.current_url != 'http://ec2-34-239-74-119.compute-1.amazonaws.com:50001/auth/reset-password':
@@ -85,7 +90,7 @@ def test_case3(enterEmail_fixture):
 @pytest.mark.html
 def test_case4(enterEmail_fixture):
     #Input với email đã đăng ký nhưng có kí tự đặc biệt ở sau @
-    case = {'email': 'khang1379@gmail.com', 'screenshot_name': 'enteremail_testcase4'}
+    case = {'email': 'khang1379@gmai_l.com', 'screenshot_name': 'enteremail_testcase4'}
     enterEmail_fixture.run_test_case(case['email'], case['screenshot_name'])
 
 @pytest.mark.html
