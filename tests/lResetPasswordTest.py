@@ -27,7 +27,7 @@ if not os.path.exists(image_dir):
 class ResetPasswordTestSelenium:
     def __init__(self, url):
         options = Options()
-        #options.add_argument('--headless')
+        options.add_argument('--headless')
         options.add_argument('--no-sandbox')
         options.add_argument('--disable-dev-shm-usage')
         self.driver = webdriver.Chrome(options=options)
