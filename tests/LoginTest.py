@@ -6,6 +6,10 @@ import logging
 import pytest
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.keys import Keys
+
 # Tạo thư mục logs nếu chưa tồn tại
 if not os.path.exists('logs'):
     os.makedirs('logs')
@@ -32,6 +36,7 @@ class LoginTestSelenium:
         options.add_argument('--disable-dev-shm-usage')
         self.driver = webdriver.Chrome(options=options)
         self.driver.get(url)
+        self.vars = {}
     def get_screen_shot(self, name):
         sleep(2)
         i = 1
@@ -48,11 +53,11 @@ class LoginTestSelenium:
         sleep(1)
         user_checkbox = self.driver.find_element(By.ID, 'user')
         if user:
-            user_checkbox.click()
+            user_checkbox.send_keys(Keys.ENTER)
         sleep(1)    
-        # Nhấn nút đăng nhập
+       # Gửi phím Enter để kích hoạt nút
         login_button = self.driver.find_element(By.XPATH, "//button[@type='submit']")
-        login_button.click()
+        login_button.send_keys(Keys.ENTER)
         sleep(2)
         # So sánh địa chỉ URL trước và sau khi đăng nhập
         if self.driver.current_url != 'http://ec2-34-239-74-119.compute-1.amazonaws.com:50001/auth/login?next=%2F':
