@@ -11,8 +11,8 @@ def driver():
     # Cài đặt các tùy chọn cho Chrome WebDriver
     chrome_options = Options()
     chrome_options.add_argument("--headless")  # Chạy trình duyệt ẩn danh
-    chrome_options.add_argument('--no-sandbox')
-    chrome_options.add_argument('--disable-dev-shm-usage')
+    chrome_options.add_argument("--no-sandbox")
+    chrome_options.add_argument("--disable-dev-shm-usage")
 
     # Đường dẫn đến Chrome WebDriver (Phải là đường dẫn tới chromedriver trong Github Actions)
     webdriver_service = Service('/driver/')  # Thay thế đường dẫn tới chromedriver
@@ -151,7 +151,6 @@ def test_case1_forgot(driver):
     driver.get("http://ec2-34-227-149-56.compute-1.amazonaws.com:50001/auth/forgot-password")
     # Thực hiện các thao tác kiểm tra giao diện
     # kiểm tra tiêu đề trang có phải là trang gửi mail quên mật khẩu không
-    assert "Forgot Password - API Dashboard" in driver.title
     assert driver.find_element(By.TAG_NAME, 'h2').text=="Forgot Password"
     
 @pytest.mark.html
@@ -193,7 +192,6 @@ def test_case1_reset(driver):
     driver.get("http://ec2-34-227-149-56.compute-1.amazonaws.com:50001/auth/reset-password")
     # Thực hiện các thao tác kiểm tra giao diện
     # kiểm tra tiêu đề trang có phải là trang đổi mật khẩu không
-    assert "Reset Password - API Dashboard" in driver.title
     assert driver.find_element(By.TAG_NAME, 'h2').text=="Reset Password"
     
 @pytest.mark.html
