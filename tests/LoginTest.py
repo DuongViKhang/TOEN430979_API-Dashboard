@@ -5,6 +5,8 @@ import os
 import logging
 import pytest
 from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.keys import Keys
 
 # Tạo thư mục logs nếu chưa tồn tại
 if not os.path.exists('logs'):
@@ -26,9 +28,13 @@ if not os.path.exists(image_dir):
 
 class LoginTestSelenium:
     def __init__(self, url):
-        self.driver = webdriver.Chrome()
+        options = Options()
+        options.add_argument('--headless')
+        options.add_argument('--no-sandbox')
+        options.add_argument('--disable-dev-shm-usage')
+        self.driver = webdriver.Chrome(options=options)
         self.driver.get(url)
-
+        self.vars = {}
     def get_screen_shot(self, name):
         sleep(2)
         i = 1
@@ -43,16 +49,17 @@ class LoginTestSelenium:
         password_input = self.driver.find_element(By.ID, 'password')
         password_input.send_keys(password)
         sleep(1)
-        user_checkbox = self.driver.find_element(By.ID, 'user')
-        if user:
-            user_checkbox.click()
+        user_checkbox = self.driver.find_element(By.ID, user)
+        if user_checkbox!=None:
+            if not user_checkbox.is_selected():
+                self.driver.execute_script("arguments[0].click();", user_checkbox)
         sleep(1)    
-        # Nhấn nút đăng nhập
+       # Gửi phím Enter để kích hoạt nút
         login_button = self.driver.find_element(By.XPATH, "//button[@type='submit']")
-        login_button.click()
-        sleep(2)
+        login_button.send_keys(Keys.ENTER)
+        sleep(5)
         # So sánh địa chỉ URL trước và sau khi đăng nhập
-        if self.driver.current_url != 'http://127.0.0.1:50001/auth/login?next=%2F':
+        if self.driver.current_url != 'http://ec2-34-239-74-119.compute-1.amazonaws.com:50001/auth/login?next=%2F':
             logging.info("Đăng nhập thành công")
         else:
             try:
@@ -73,38 +80,38 @@ class LoginTestSelenium:
 
 @pytest.fixture(scope="module")
 def login_fixture(request):
-    login = LoginTestSelenium('http://127.0.0.1:50001')
+    login = LoginTestSelenium('http://ec2-34-239-74-119.compute-1.amazonaws.com:50001')
     yield login
     login.driver.close()
 
 @pytest.mark.html
 #Đăng nhập đúng user và pass
 def test_case1(login_fixture):
-    case = {'username': 'test1', 'password': '123loI', 'user': True, 'screenshot_name': 'testcase1'}
+    case = {'username': 'test1', 'password': '123loI', 'user': 'user', 'screenshot_name': 'testcase1'}
     login_fixture.run_test_case(case['username'], case['password'], case['user'], case['screenshot_name'])
 
 @pytest.mark.html
 #Đăng nhập sai mật khẩu
 def test_case2(login_fixture):
-    case = {'username': 'test1', 'password': 'test', 'user': True, 'screenshot_name': 'testcase2'}
+    case = {'username': 'test1', 'password': 'test', 'user': 'user', 'screenshot_name': 'testcase2'}
     login_fixture.run_test_case(case['username'], case['password'], case['user'], case['screenshot_name'])
 
 @pytest.mark.html
 #Đăng nhập sai user đúng mật khẩu
 def test_case3(login_fixture):
-    case = {'username': 'test123', 'password': '123loI', 'user': True, 'screenshot_name': 'testcase3'}
+    case = {'username': 'test123', 'password': '123loI', 'user': 'user', 'screenshot_name': 'testcase3'}
     login_fixture.run_test_case(case['username'], case['password'], case['user'], case['screenshot_name'])
 
 @pytest.mark.html
 #Đăng nhập với username là số âm
 def test_case4(login_fixture):
-    case = {'username': '-1', 'password': '123loI', 'user': True, 'screenshot_name': 'testcase4'}
+    case = {'username': '-1', 'password': '123loI', 'user': 'user', 'screenshot_name': 'testcase4'}
     login_fixture.run_test_case(case['username'], case['password'], case['user'], case['screenshot_name'])
     
 @pytest.mark.html
 #Đăng nhập không nhập username đúng nhưng chữ hoa thường lẫn lộn
 def test_case5(login_fixture):
-    case = {'username': 'tEsT1', 'password': 'test', 'user': True, 'screenshot_name': 'testcase5'}
+    case = {'username': 'tEsT1', 'password': 'test', 'user': 'user', 'screenshot_name': 'testcase5'}
     login_fixture.run_test_case(case['username'], case['password'], case['user'], case['screenshot_name'])
     
 
