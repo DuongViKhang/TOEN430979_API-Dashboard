@@ -55,7 +55,7 @@ class LoginTestSelenium:
         login_button.click()
         sleep(2)
         # So sánh địa chỉ URL trước và sau khi đăng nhập
-        if self.driver.current_url != 'http://ec2-34-227-149-56.compute-1.amazonaws.com:50001/auth/login?next=%2F':
+        if self.driver.current_url != 'http://ec2-34-239-74-119.compute-1.amazonaws.com:50001/auth/login?next=%2F':
             logging.info("Đăng nhập thành công")
         else:
             try:
@@ -76,7 +76,7 @@ class LoginTestSelenium:
 
 @pytest.fixture(scope="module")
 def login_fixture(request):
-    login = LoginTestSelenium('http://ec2-34-227-149-56.compute-1.amazonaws.com:50001')
+    login = LoginTestSelenium('http://ec2-34-239-74-119.compute-1.amazonaws.com:50001')
     yield login
     login.driver.close()
 
