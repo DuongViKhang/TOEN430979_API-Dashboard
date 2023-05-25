@@ -11,6 +11,8 @@ def driver():
     # Cài đặt các tùy chọn cho Chrome WebDriver
     chrome_options = Options()
     chrome_options.add_argument("--headless")  # Chạy trình duyệt ẩn danh
+    chrome_options.add_argument('--no-sandbox')
+    chrome_options.add_argument('--disable-dev-shm-usage')
 
     # Đường dẫn đến Chrome WebDriver (Phải là đường dẫn tới chromedriver trong Github Actions)
     webdriver_service = Service('/driver/')  # Thay thế đường dẫn tới chromedriver
@@ -146,7 +148,7 @@ def test_case5_signup(driver):
 @pytest.mark.html
 def test_case1_forgot(driver):
     # Điều hướng đến trang web cần kiểm tra
-    driver.get("http://localhost:50001/auth/forgot-password")
+    driver.get("http://ec2-34-227-149-56.compute-1.amazonaws.com:50001/auth/forgot-password")
     # Thực hiện các thao tác kiểm tra giao diện
     # kiểm tra tiêu đề trang có phải là trang gửi mail quên mật khẩu không
     assert "Forgot Password - API Dashboard" in driver.title
@@ -155,7 +157,7 @@ def test_case1_forgot(driver):
 @pytest.mark.html
 def test_case2_forgot(driver):
     # Điều hướng đến trang web cần kiểm tra
-    driver.get("http://localhost:50001/auth/forgot-password")
+    driver.get("http://ec2-34-227-149-56.compute-1.amazonaws.com:50001/auth/forgot-password")
     # Thực hiện các thao tác kiểm tra giao diện
     # kiểm tra các trường có tồn tại không
     assert driver.find_element(By.ID, 'email')
@@ -163,7 +165,7 @@ def test_case2_forgot(driver):
 @pytest.mark.html
 def test_case3_forgot(driver): 
     # Điều hướng đến trang web cần kiểm tra
-    driver.get("http://localhost:50001/auth/forgot-password")
+    driver.get("http://ec2-34-227-149-56.compute-1.amazonaws.com:50001/auth/forgot-password")
     # Thực hiện các thao tác kiểm tra giao diện
     # kiểm tra nút gửi email có tồn tại không
     driver.find_element(By.XPATH, "//button[@type='submit']")
@@ -171,7 +173,7 @@ def test_case3_forgot(driver):
 @pytest.mark.html
 def test_case4_forgot(driver):
     # Điều hướng đến trang web cần kiểm tra
-    driver.get("http://localhost:50001/auth/forgot-password")
+    driver.get("http://ec2-34-227-149-56.compute-1.amazonaws.com:50001/auth/forgot-password")
     # Thực hiện các thao tác kiểm tra giao diện
     # kiểm tra link đăng ký có tồn tại không và đường link có truy cập được hay không
     signuplink = driver.find_element(By.LINK_TEXT, "Create an account")
@@ -188,7 +190,7 @@ def test_case4_forgot(driver):
 @pytest.mark.html
 def test_case1_reset(driver):
     # Điều hướng đến trang web cần kiểm tra
-    driver.get("http://localhost:50001/auth/reset-password")
+    driver.get("http://ec2-34-227-149-56.compute-1.amazonaws.com:50001/auth/reset-password")
     # Thực hiện các thao tác kiểm tra giao diện
     # kiểm tra tiêu đề trang có phải là trang đổi mật khẩu không
     assert "Reset Password - API Dashboard" in driver.title
@@ -197,7 +199,7 @@ def test_case1_reset(driver):
 @pytest.mark.html
 def test_case2_reset(driver):
     # Điều hướng đến trang web cần kiểm tra
-    driver.get("http://localhost:50001/auth/reset-password")
+    driver.get("http://ec2-34-227-149-56.compute-1.amazonaws.com:50001/auth/reset-password")
     # Thực hiện các thao tác kiểm tra giao diện
     # kiểm tra các trường có tồn tại không
     assert driver.find_element(By.ID, 'OTP')
@@ -207,7 +209,7 @@ def test_case2_reset(driver):
 @pytest.mark.html
 def test_case3_reset(driver): 
     # Điều hướng đến trang web cần kiểm tra
-    driver.get("http://localhost:50001/auth/reset-password")
+    driver.get("http://ec2-34-227-149-56.compute-1.amazonaws.com:50001/auth/reset-password")
     # Thực hiện các thao tác kiểm tra giao diện
     # kiểm tra nút đổi mật khẩu có tồn tại không
     driver.find_element(By.XPATH, "//button[@type='submit']")
@@ -215,7 +217,7 @@ def test_case3_reset(driver):
 @pytest.mark.html
 def test_case4_reset(driver):
     # Điều hướng đến trang web cần kiểm tra
-    driver.get("http://localhost:50001/auth/reset-password")
+    driver.get("http://ec2-34-227-149-56.compute-1.amazonaws.com:50001/auth/reset-password")
     # Thực hiện các thao tác kiểm tra giao diện
     # kiểm tra link đăng nhập có tồn tại không và đường link có truy cập được hay không
     loginlink = driver.find_element(By.LINK_TEXT, "Login")
