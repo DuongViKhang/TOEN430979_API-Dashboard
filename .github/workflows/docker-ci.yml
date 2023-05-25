@@ -64,9 +64,9 @@ jobs:
             sudo apt-get install -y -q docker-compose
             sudo apt-get install -y -q git
             cd TOEN430979_API-Dashboard
-            sudo docker-compose down -v
-            sudo docker-compose rm -f
-            sudo docker image prune -af
-            sudo docker-compose -p api-dashboard up -d --build
+            sudo docker-compose -f ./docker-compose.yml down -v
+            sudo docker rm duongvikhang/api-dashboard:v1.0.0 -f || true
+            sudo docker rmi duongvikhang/api-dashboard:v1.0.0 -f || true
+            sudo docker-compose -f ./docker-compose.yml up -d --build
             
     
