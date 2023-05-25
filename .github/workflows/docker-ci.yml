@@ -53,17 +53,20 @@ jobs:
           script: |
             if [ -d "TOEN430979_API-Dashboard" ]; then
               cd TOEN430979_API-Dashboard
-              git pull https://github.com/DuongViKhang/TOEN430979_API-Dashboard.git && \echo "Pull completed"
+              git git checkout main
+              git pull origin main
+              echo "Pull completed"
               cd ..
             else
-              git clone https://github.com/DuongViKhang/TOEN430979_API-Dashboard.git && \echo "Clone completed"
+              git clone https://github.com/DuongViKhang/TOEN430979_API-Dashboard.git
+              echo "Clone completed"
             fi
-            sudo apt-get update && sudo apt-get upgrade -y
-            sudo apt-get install -y docker-compose
+            sudo apt update && sudo apt upgrade -y
+            sudo apt install -y docker-compose
             cd TOEN430979_API-Dashboard
-            sudo docker-compose -f ./docker-compose.yml down -v
+            sudo docker-compose down -v
             sudo docker rm duongvikhang/api-dashboard:v1.0.0 -f || true
             sudo docker rmi duongvikhang/api-dashboard:v1.0.0 -f || true
-            sudo docker-compose -f ./docker-compose.yml up -d --build
+            sudo docker-compose up -d --build
             
     
