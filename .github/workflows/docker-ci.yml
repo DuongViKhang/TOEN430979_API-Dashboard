@@ -4,18 +4,17 @@ on:
   push:
     branches: [ "main" ]
 
-
 jobs:
   docker:
     name: Build docker image
     runs-on: ubuntu-latest
 
     steps:
-      #  Checkout mã nguồn từ nhánh "production" của repository.
+      # Checkout mã nguồn từ nhánh "production" của repository.
       - name: Checkout repository
         uses: actions/checkout@v2
-        
-     # Đăng nhập vào Docker Hub bằng tên người dùng và mật khẩu được lưu trữ trong secrets.
+
+      # Đăng nhập vào Docker Hub bằng tên người dùng và mật khẩu được lưu trữ trong secrets.
       - name: Login docker hub
         uses: docker/login-action@v1
         with:
@@ -49,11 +48,11 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: ${{ secrets.SSH_PORT }}
+          port: ${{secrets.SSH_PORT }}
           script: |
             if [ -d "TOEN430979_API-Dashboard" ]; then
               cd TOEN430979_API-Dashboard
-              git git checkout main
+              git checkout main
               git pull origin main
               echo "Pull completed"
               cd ..
@@ -63,11 +62,10 @@ jobs:
             fi
             sudo apt-get update -y -q && sudo apt-get upgrade -y -q
             sudo apt-get install -y -q docker-compose
-            sudo apt-get install git
+            sudo apt-get install -y -q git
             cd TOEN430979_API-Dashboard
             sudo docker-compose down -v
-            sudo docker rm api-dashboard:v1.0.0 -f || true
-            sudo docker rmi api-dashboard:v1.0.0 -f || true
+            sudo docker-compose rm -f
             sudo docker-compose up -d --build
             
     
