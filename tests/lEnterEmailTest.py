@@ -4,7 +4,6 @@ from selenium.webdriver.common.by import By
 import os
 import logging
 import pytest
-from datetime import datetime
 # Tạo thư mục logs nếu chưa tồn tại
 if not os.path.exists('logs'):
     os.makedirs('logs')
@@ -60,7 +59,7 @@ class EnterEmailTestSelenium:
 
 @pytest.fixture(scope="module")
 def enterEmail_fixture(request):
-    enterEmail = EnterEmailTestSelenium('http://localhost:50001/auth/forgot-password')
+    enterEmail = EnterEmailTestSelenium('http://ec2-34-239-74-119.compute-1.amazonaws.com:50001/auth/forgot-password')
     yield enterEmail
     enterEmail.driver.close()
 
