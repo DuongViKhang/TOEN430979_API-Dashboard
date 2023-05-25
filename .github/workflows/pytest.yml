@@ -27,9 +27,9 @@ jobs:
           cd tests
           python -m pytest -v --html=ui_report.html UITest.py
           python -m pytest -v --html=login_report.html LoginTest.py
-          python -m pytest -v --html=signup_report.html SignUpTest.py
-          python -m pytest -v --html=enteremail_report.html EnterEmailTest.py
-          python -m pytest -v --html=reset_report.html ResetPasswordTest.py
+          python -m pytest -v --html=signup_report.html lSignUpTest.py
+          python -m pytest -v --html=enteremail_report.html lEnterEmailTest.py
+          python -m pytest -v --html=reset_report.html lResetPasswordTest.py
         
       - name: Upload Test Reports
         uses: actions/upload-artifact@v2
