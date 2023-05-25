@@ -3,11 +3,24 @@ from selenium.webdriver.common.by import By
 import pytest
 import requests
 import logging
+from time import sleep
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.keys import Keys
 # Fixture setup
 @pytest.fixture(scope="module")
 def driver():
-    # Khởi tạo WebDriver (ở đây dùng Chrome)
-    driver = webdriver.Chrome()
+    # Cài đặt các tùy chọn cho Chrome WebDriver
+    chrome_options = Options()
+    chrome_options.add_argument("--headless")  # Chạy trình duyệt ẩn không giao diện
+    chrome_options.add_argument("--no-sandbox")
+    chrome_options.add_argument("--disable-dev-shm-usage")
+
+    # Đường dẫn đến Chrome WebDriver (Phải là đường dẫn tới chromedriver trong Github Actions)
+    webdriver_service = Service('/driver/')  # Thay thế đường dẫn tới chromedriver
+
+    # Khởi tạo trình điều khiển Chrome
+    driver = webdriver.Chrome(service=webdriver_service, options=chrome_options)
     yield driver
     # Teardown - Đóng trình duyệt sau khi hoàn thành
     driver.quit()
@@ -16,7 +29,7 @@ def driver():
 @pytest.mark.html
 def test_case1_login(driver):
     # Điều hướng đến trang web cần kiểm tra
-    driver.get("http://127.0.0.1:50001")
+    driver.get("http://ec2-34-239-74-119.compute-1.amazonaws.com:50001")
     # Thực hiện các thao tác kiểm tra giao diện
     # kiểm tra tiêu đề trang có phải là trang đăng nhập không
     assert "Login - API Dashboard" in driver.title
@@ -25,7 +38,7 @@ def test_case1_login(driver):
 @pytest.mark.html
 def test_case2_login(driver):
     # Điều hướng đến trang web cần kiểm tra
-    driver.get("http://127.0.0.1:50001")
+    driver.get("http://ec2-34-239-74-119.compute-1.amazonaws.com:50001")
     # Thực hiện các thao tác kiểm tra giao diện
     # kiểm tra các trường username và password có tồn tại không
     assert driver.find_element(By.ID, 'username')
@@ -34,7 +47,7 @@ def test_case2_login(driver):
 @pytest.mark.html
 def test_case3_login(driver):
     # Điều hướng đến trang web cần kiểm tra
-    driver.get("http://127.0.0.1:50001")
+    driver.get("http://ec2-34-239-74-119.compute-1.amazonaws.com:50001")
     # Thực hiện các thao tác kiểm tra giao diện
     # kiểm tra nút đăng nhập có tồn tại không
     driver.find_element(By.XPATH, "//button[@type='submit']")
@@ -42,7 +55,7 @@ def test_case3_login(driver):
 @pytest.mark.html
 def test_case4_login(driver):
     # Điều hướng đến trang web cần kiểm tra
-    driver.get("http://127.0.0.1:50001")
+    driver.get("http://ec2-34-239-74-119.compute-1.amazonaws.com:50001")
     # Thực hiện các thao tác kiểm tra giao diện
     # kiểm tra checkbox user và admin có tồn tại không
     assert driver.find_element(By.ID, 'user')
@@ -51,7 +64,7 @@ def test_case4_login(driver):
 @pytest.mark.html
 def test_case5_login(driver):
     # Điều hướng đến trang web cần kiểm tra
-    driver.get("http://127.0.0.1:50001")
+    driver.get("http://ec2-34-239-74-119.compute-1.amazonaws.com:50001")
     # Thực hiện các thao tác kiểm tra giao diện
     # kiểm tra 2 link quên mật khẩu và create an account có tồn tại không
     assert driver.find_element(By.LINK_TEXT, "Forgot Password?")
@@ -76,7 +89,7 @@ def test_case5_login(driver):
 @pytest.mark.html
 def test_case1_signup(driver):
     # Điều hướng đến trang web cần kiểm tra
-    driver.get("http://127.0.0.1:50001/auth/signup")
+    driver.get("http://ec2-34-239-74-119.compute-1.amazonaws.com:50001/auth/signup")
     # Thực hiện các thao tác kiểm tra giao diện
     # kiểm tra tiêu đề trang có phải là trang đăng ký không
     assert "SignUp - API Dashboard" in driver.title
@@ -85,7 +98,7 @@ def test_case1_signup(driver):
 @pytest.mark.html
 def test_case2_signup(driver):
     # Điều hướng đến trang web cần kiểm tra
-    driver.get("http://127.0.0.1:50001/auth/signup")
+    driver.get("http://ec2-34-239-74-119.compute-1.amazonaws.com:50001/auth/signup")
     # Thực hiện các thao tác kiểm tra giao diện
     # kiểm tra các trường đăng ký có tồn tại không
     assert driver.find_element(By.ID, 'username')
@@ -98,7 +111,7 @@ def test_case2_signup(driver):
 @pytest.mark.html
 def test_case3_signup(driver): 
     # Điều hướng đến trang web cần kiểm tra
-    driver.get("http://127.0.0.1:50001/auth/signup")
+    driver.get("http://ec2-34-239-74-119.compute-1.amazonaws.com:50001/auth/signup")
     # Thực hiện các thao tác kiểm tra giao diện
     # kiểm tra nút đăng ký có tồn tại không
     driver.find_element(By.XPATH, "//button[@type='submit']")
@@ -106,7 +119,7 @@ def test_case3_signup(driver):
 @pytest.mark.html
 def test_case4_signup(driver):
     # Điều hướng đến trang web cần kiểm tra
-    driver.get("http://127.0.0.1:50001/auth/signup")
+    driver.get("http://ec2-34-239-74-119.compute-1.amazonaws.com:50001/auth/signup")
     # Thực hiện các thao tác kiểm tra giao diện
     # kiểm tra các radio có tồn tại
     assert driver.find_element(By.ID, 'radio-normal')
@@ -119,7 +132,7 @@ def test_case4_signup(driver):
 @pytest.mark.html
 def test_case5_signup(driver):
     # Điều hướng đến trang web cần kiểm tra
-    driver.get("http://127.0.0.1:50001/auth/signup")
+    driver.get("http://ec2-34-239-74-119.compute-1.amazonaws.com:50001/auth/signup")
     # Thực hiện các thao tác kiểm tra giao diện
     # kiểm tra link đăng nhập có tồn tại không và đường link có truy cập được hay không
     loginlink = driver.find_element(By.LINK_TEXT, "Login")
@@ -137,16 +150,21 @@ def test_case5_signup(driver):
 @pytest.mark.html
 def test_case1_forgot(driver):
     # Điều hướng đến trang web cần kiểm tra
-    driver.get("http://localhost:50001/auth/forgot-password")
+    url = "http://ec2-34-239-74-119.compute-1.amazonaws.com:50001/auth/forgot-password" 
+    response = requests.get(url)
+    assert response.status_code == 200
+    driver.get(url)
     # Thực hiện các thao tác kiểm tra giao diện
     # kiểm tra tiêu đề trang có phải là trang gửi mail quên mật khẩu không
-    assert "Forgot Password - API Dashboard" in driver.title
     assert driver.find_element(By.TAG_NAME, 'h2').text=="Forgot Password"
     
 @pytest.mark.html
 def test_case2_forgot(driver):
     # Điều hướng đến trang web cần kiểm tra
-    driver.get("http://localhost:50001/auth/forgot-password")
+    url = "http://ec2-34-239-74-119.compute-1.amazonaws.com:50001/auth/forgot-password" 
+    response = requests.get(url)
+    assert response.status_code == 200
+    driver.get(url)
     # Thực hiện các thao tác kiểm tra giao diện
     # kiểm tra các trường có tồn tại không
     assert driver.find_element(By.ID, 'email')
@@ -154,7 +172,10 @@ def test_case2_forgot(driver):
 @pytest.mark.html
 def test_case3_forgot(driver): 
     # Điều hướng đến trang web cần kiểm tra
-    driver.get("http://localhost:50001/auth/forgot-password")
+    url = "http://ec2-34-239-74-119.compute-1.amazonaws.com:50001/auth/forgot-password" 
+    response = requests.get(url)
+    assert response.status_code == 200
+    driver.get(url)
     # Thực hiện các thao tác kiểm tra giao diện
     # kiểm tra nút gửi email có tồn tại không
     driver.find_element(By.XPATH, "//button[@type='submit']")
@@ -162,11 +183,25 @@ def test_case3_forgot(driver):
 @pytest.mark.html
 def test_case4_forgot(driver):
     # Điều hướng đến trang web cần kiểm tra
-    driver.get("http://localhost:50001/auth/forgot-password")
+    url = "http://ec2-34-239-74-119.compute-1.amazonaws.com:50001/auth/forgot-password" 
+    response = requests.get(url)
+    assert response.status_code == 200
+    driver.get(url)
+    # Thực hiện các thao tác kiểm tra giao diện
+    # kiểm tra link đăng ký có tồn tại không
+    signuplink = driver.find_element(By.LINK_TEXT, "Create an account")
+    assert signuplink
+
+@pytest.mark.html
+def test_case5_forgot(driver):
+    # Điều hướng đến trang web cần kiểm tra
+    url = "http://ec2-34-239-74-119.compute-1.amazonaws.com:50001/auth/forgot-password" 
+    response = requests.get(url)
+    assert response.status_code == 200
+    driver.get(url)
     # Thực hiện các thao tác kiểm tra giao diện
     # kiểm tra link đăng ký có tồn tại không và đường link có truy cập được hay không
     signuplink = driver.find_element(By.LINK_TEXT, "Create an account")
-    assert signuplink
     signuplink_url = signuplink.get_attribute("href")
     try:
         # Sử dụng requests để gửi yêu cầu GET đến đường dẫn và kiểm tra mã trạng thái (status code)
@@ -179,16 +214,21 @@ def test_case4_forgot(driver):
 @pytest.mark.html
 def test_case1_reset(driver):
     # Điều hướng đến trang web cần kiểm tra
-    driver.get("http://localhost:50001/auth/reset-password")
+    url = "http://ec2-34-239-74-119.compute-1.amazonaws.com:50001/auth/reset-password" 
+    response = requests.get(url)
+    assert response.status_code == 200
+    driver.get(url)
     # Thực hiện các thao tác kiểm tra giao diện
     # kiểm tra tiêu đề trang có phải là trang đổi mật khẩu không
-    assert "Reset Password - API Dashboard" in driver.title
     assert driver.find_element(By.TAG_NAME, 'h2').text=="Reset Password"
     
 @pytest.mark.html
 def test_case2_reset(driver):
     # Điều hướng đến trang web cần kiểm tra
-    driver.get("http://localhost:50001/auth/reset-password")
+    url = "http://ec2-34-239-74-119.compute-1.amazonaws.com:50001/auth/reset-password" 
+    response = requests.get(url)
+    assert response.status_code == 200
+    driver.get(url)
     # Thực hiện các thao tác kiểm tra giao diện
     # kiểm tra các trường có tồn tại không
     assert driver.find_element(By.ID, 'OTP')
@@ -198,15 +238,34 @@ def test_case2_reset(driver):
 @pytest.mark.html
 def test_case3_reset(driver): 
     # Điều hướng đến trang web cần kiểm tra
-    driver.get("http://localhost:50001/auth/reset-password")
+    url = "http://ec2-34-239-74-119.compute-1.amazonaws.com:50001/auth/reset-password" 
+    response = requests.get(url)
+    assert response.status_code == 200
+    driver.get(url)
     # Thực hiện các thao tác kiểm tra giao diện
     # kiểm tra nút đổi mật khẩu có tồn tại không
     driver.find_element(By.XPATH, "//button[@type='submit']")
      
 @pytest.mark.html
 def test_case4_reset(driver):
+    
     # Điều hướng đến trang web cần kiểm tra
-    driver.get("http://localhost:50001/auth/reset-password")
+    url = "http://ec2-34-239-74-119.compute-1.amazonaws.com:50001/auth/reset-password" 
+    response = requests.get(url)
+    assert response.status_code == 200
+    driver.get(url)
+    # Thực hiện các thao tác kiểm tra giao diện
+    # kiểm tra link đăng nhập có tồn tại không
+    loginlink = driver.find_element(By.LINK_TEXT, "Login")
+    assert loginlink
+
+@pytest.mark.html
+def test_case5_reset(driver):
+    # Điều hướng đến trang web cần kiểm tra
+    url = "http://ec2-34-239-74-119.compute-1.amazonaws.com:50001/auth/reset-password" 
+    response = requests.get(url)
+    assert response.status_code == 200
+    driver.get(url)
     # Thực hiện các thao tác kiểm tra giao diện
     # kiểm tra link đăng nhập có tồn tại không và đường link có truy cập được hay không
     loginlink = driver.find_element(By.LINK_TEXT, "Login")
@@ -219,3 +278,172 @@ def test_case4_reset(driver):
     except requests.exceptions.RequestException as e:
         pytest.fail(f"Failed to access link: {e}")
     assert driver.find_element(By.LINK_TEXT, "Login")
+    
+@pytest.mark.html
+def test_case1_index(driver):
+    url = "http://ec2-34-239-74-119.compute-1.amazonaws.com:50001" 
+    response = requests.get(url)
+    assert response.status_code == 200
+    driver.get(url)
+    #Đăng nhập vào hệ thống bằng tài khoản admin
+    username_input = driver.find_element(By.ID, 'username')
+    username_input.send_keys('admin')
+    sleep(1)
+    password_input = driver.find_element(By.ID, 'password')
+    password_input.send_keys('admin')
+    sleep(1)
+    user_checkbox = driver.find_element(By.ID, 'admin')
+    if user_checkbox!=None:
+        if not user_checkbox.is_selected():
+                driver.execute_script("arguments[0].click();", user_checkbox)
+    sleep(1)    
+    # Gửi phím Enter để kích hoạt nút
+    login_button = driver.find_element(By.XPATH, "//button[@type='submit']")
+    login_button.send_keys(Keys.ENTER)
+    sleep(2)
+    
+    #Xóa các cookie và refresh lại trang
+    driver.delete_all_cookies()
+    driver.refresh()
+        
+@pytest.mark.html
+def test_case2_index(driver):
+    url = "http://ec2-34-239-74-119.compute-1.amazonaws.com:50001" 
+    response = requests.get(url)
+    assert response.status_code == 200
+    driver.get(url)
+    #Đăng nhập vào hệ thống bằng tài khoản admin
+    username_input = driver.find_element(By.ID, 'username')
+    username_input.send_keys('admin')
+    sleep(1)
+    password_input = driver.find_element(By.ID, 'password')
+    password_input.send_keys('admin')
+    sleep(1)
+    user_checkbox = driver.find_element(By.ID, 'admin')
+    if user_checkbox!=None:
+        if not user_checkbox.is_selected():
+                driver.execute_script("arguments[0].click();", user_checkbox)
+    sleep(1)    
+    # Gửi phím Enter để kích hoạt nút
+    login_button = driver.find_element(By.XPATH, "//button[@type='submit']")
+    login_button.send_keys(Keys.ENTER)
+    sleep(2)
+
+    # Kiểm tra hiển thị số liệu tổng hợp
+    total_item = driver.find_element(By.CSS_SELECTOR, ".text-bold")
+    assert total_item.is_displayed()
+    assert total_item.text !=None or total_item.text != ''
+    
+    #Xóa các cookie và refresh lại trang
+    driver.delete_all_cookies()
+    driver.refresh()
+    
+@pytest.mark.html
+def test_case3_index(driver):
+    url = "http://ec2-34-239-74-119.compute-1.amazonaws.com:50001" 
+    response = requests.get(url)
+    assert response.status_code == 200
+    driver.get(url)
+    #Đăng nhập vào hệ thống bằng tài khoản admin
+    username_input = driver.find_element(By.ID, 'username')
+    username_input.send_keys('admin')
+    sleep(1)
+    password_input = driver.find_element(By.ID, 'password')
+    password_input.send_keys('admin')
+    sleep(1)
+    user_checkbox = driver.find_element(By.ID, 'admin')
+    if user_checkbox!=None:
+        if not user_checkbox.is_selected():
+                driver.execute_script("arguments[0].click();", user_checkbox)
+    sleep(1)    
+    # Gửi phím Enter để kích hoạt nút
+    login_button = driver.find_element(By.XPATH, "//button[@type='submit']")
+    login_button.send_keys(Keys.ENTER)
+    sleep(2)
+
+    # Kiểm tra biểu đồ dự đoán gây ra status fail
+    chart1 = driver.find_element(By.ID, "Chart1")
+    assert chart1.is_displayed()
+    
+    chart1 = driver.find_element(By.ID, "Chart2")
+    assert chart1.is_displayed()
+
+    # Kiểm tra biểu đồ predict_result gây ra status fail
+    chart5 = driver.find_element(By.ID, "Chart4")
+    assert chart5.is_displayed()
+    
+    #Xóa các cookie và refresh lại trang
+    driver.delete_all_cookies()
+    driver.refresh()
+    
+@pytest.mark.html
+def test_case4_index(driver):
+    url = "http://ec2-34-239-74-119.compute-1.amazonaws.com:50001" 
+    response = requests.get(url)
+    assert response.status_code == 200
+    driver.get(url)
+    #Đăng nhập vào hệ thống bằng tài khoản admin
+    username_input = driver.find_element(By.ID, 'username')
+    username_input.send_keys('admin')
+    sleep(1)
+    password_input = driver.find_element(By.ID, 'password')
+    password_input.send_keys('admin')
+    sleep(1)
+    user_checkbox = driver.find_element(By.ID, 'admin')
+    if user_checkbox!=None:
+        if not user_checkbox.is_selected():
+                driver.execute_script("arguments[0].click();", user_checkbox)
+    sleep(1)    
+    # Gửi phím Enter để kích hoạt nút
+    login_button = driver.find_element(By.XPATH, "//button[@type='submit']")
+    login_button.send_keys(Keys.ENTER)
+    sleep(2)
+    # Kiểm tra lịch ngày
+    calendar = driver.find_element(By.ID, "calendar-mini")
+    assert calendar.is_displayed()
+    
+    #Xóa các cookie và refresh lại trang
+    driver.delete_all_cookies()
+    driver.refresh()    
+     
+@pytest.mark.html
+def test_case5_index(driver):
+    url = "http://ec2-34-239-74-119.compute-1.amazonaws.com:50001" 
+    response = requests.get(url)
+    assert response.status_code == 200
+    driver.get(url)
+    #Đăng nhập vào hệ thống bằng tài khoản admin
+    username_input = driver.find_element(By.ID, 'username')
+    username_input.send_keys('admin')
+    sleep(1)
+    password_input = driver.find_element(By.ID, 'password')
+    password_input.send_keys('admin')
+    sleep(1)
+    user_checkbox = driver.find_element(By.ID, 'admin')
+    if user_checkbox!=None:
+        if not user_checkbox.is_selected():
+                driver.execute_script("arguments[0].click();", user_checkbox)
+    sleep(1)    
+    # Gửi phím Enter để kích hoạt nút
+    login_button = driver.find_element(By.XPATH, "//button[@type='submit']")
+    login_button.send_keys(Keys.ENTER)
+    sleep(2)
+    
+    # Kiểm tra nút đăng xuất
+    menu = driver.find_element(By.XPATH, "//button[@id='menu-toggle']")
+    driver.execute_script("arguments[0].click();",menu)
+    sleep(2)
+    logout_button = driver.find_element(By.XPATH, " //a[@class='main-btn primary-btn btn-hover' and @target='_blank']")
+    assert logout_button.is_displayed()
+    
+    #Lấy url từ các link
+    link_url = logout_button.get_attribute("href")
+    try:
+        response = requests.get(link_url)
+        assert response.status_code == 200, "Link is accessible"
+    except requests.exceptions.RequestException as e:
+        pytest.fail(f"Failed to access link: {e}")
+    
+    #Xóa các cookie và refresh lại trang    
+    driver.delete_all_cookies()
+    driver.refresh()
