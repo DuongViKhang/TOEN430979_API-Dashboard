@@ -5,7 +5,7 @@ import os
 import logging
 import pytest
 from selenium.common.exceptions import NoSuchElementException
-
+from selenium.webdriver.chrome.options import Options
 # Tạo thư mục logs nếu chưa tồn tại
 if not os.path.exists('logs'):
     os.makedirs('logs')
@@ -26,9 +26,12 @@ if not os.path.exists(image_dir):
 
 class LoginTestSelenium:
     def __init__(self, url):
-        self.driver = webdriver.Chrome()
+        options = Options()
+        options.add_argument('--headless')
+        options.add_argument('--no-sandbox')
+        options.add_argument('--disable-dev-shm-usage')
+        self.driver = webdriver.Chrome(options=options)
         self.driver.get(url)
-
     def get_screen_shot(self, name):
         sleep(2)
         i = 1
