@@ -21,6 +21,7 @@ jobs:
           pip install pytest-html
           pip install selenium
           pip install webdriver_manager
+          pip install imapclient
 
       - name: Run tests
         run: |
