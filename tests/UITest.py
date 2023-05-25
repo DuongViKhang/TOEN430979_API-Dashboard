@@ -25,7 +25,7 @@ def driver():
 @pytest.mark.html
 def test_case1_login(driver):
     # Điều hướng đến trang web cần kiểm tra
-    driver.get("http://127.0.0.1:50001")
+    driver.get("http://ec2-34-227-149-56.compute-1.amazonaws.com:50001")
     # Thực hiện các thao tác kiểm tra giao diện
     # kiểm tra tiêu đề trang có phải là trang đăng nhập không
     assert "Login - API Dashboard" in driver.title
@@ -34,7 +34,7 @@ def test_case1_login(driver):
 @pytest.mark.html
 def test_case2_login(driver):
     # Điều hướng đến trang web cần kiểm tra
-    driver.get("http://127.0.0.1:50001")
+    driver.get("http://ec2-34-227-149-56.compute-1.amazonaws.com:50001")
     # Thực hiện các thao tác kiểm tra giao diện
     # kiểm tra các trường username và password có tồn tại không
     assert driver.find_element(By.ID, 'username')
@@ -43,7 +43,7 @@ def test_case2_login(driver):
 @pytest.mark.html
 def test_case3_login(driver):
     # Điều hướng đến trang web cần kiểm tra
-    driver.get("http://127.0.0.1:50001")
+    driver.get("http://ec2-34-227-149-56.compute-1.amazonaws.com:50001")
     # Thực hiện các thao tác kiểm tra giao diện
     # kiểm tra nút đăng nhập có tồn tại không
     driver.find_element(By.XPATH, "//button[@type='submit']")
@@ -51,7 +51,7 @@ def test_case3_login(driver):
 @pytest.mark.html
 def test_case4_login(driver):
     # Điều hướng đến trang web cần kiểm tra
-    driver.get("http://127.0.0.1:50001")
+    driver.get("http://ec2-34-227-149-56.compute-1.amazonaws.com:50001")
     # Thực hiện các thao tác kiểm tra giao diện
     # kiểm tra checkbox user và admin có tồn tại không
     assert driver.find_element(By.ID, 'user')
@@ -60,7 +60,7 @@ def test_case4_login(driver):
 @pytest.mark.html
 def test_case5_login(driver):
     # Điều hướng đến trang web cần kiểm tra
-    driver.get("http://127.0.0.1:50001")
+    driver.get("http://ec2-34-227-149-56.compute-1.amazonaws.com:50001")
     # Thực hiện các thao tác kiểm tra giao diện
     # kiểm tra 2 link quên mật khẩu và create an account có tồn tại không
     assert driver.find_element(By.LINK_TEXT, "Forgot Password?")
@@ -85,7 +85,7 @@ def test_case5_login(driver):
 @pytest.mark.html
 def test_case1_signup(driver):
     # Điều hướng đến trang web cần kiểm tra
-    driver.get("http://127.0.0.1:50001/auth/signup")
+    driver.get("http://ec2-34-227-149-56.compute-1.amazonaws.com:50001/auth/signup")
     # Thực hiện các thao tác kiểm tra giao diện
     # kiểm tra tiêu đề trang có phải là trang đăng ký không
     assert "SignUp - API Dashboard" in driver.title
@@ -94,7 +94,7 @@ def test_case1_signup(driver):
 @pytest.mark.html
 def test_case2_signup(driver):
     # Điều hướng đến trang web cần kiểm tra
-    driver.get("http://127.0.0.1:50001/auth/signup")
+    driver.get("http://ec2-34-227-149-56.compute-1.amazonaws.com:50001/auth/signup")
     # Thực hiện các thao tác kiểm tra giao diện
     # kiểm tra các trường đăng ký có tồn tại không
     assert driver.find_element(By.ID, 'username')
@@ -107,7 +107,7 @@ def test_case2_signup(driver):
 @pytest.mark.html
 def test_case3_signup(driver): 
     # Điều hướng đến trang web cần kiểm tra
-    driver.get("http://127.0.0.1:50001/auth/signup")
+    driver.get("http://ec2-34-227-149-56.compute-1.amazonaws.com:50001/auth/signup")
     # Thực hiện các thao tác kiểm tra giao diện
     # kiểm tra nút đăng ký có tồn tại không
     driver.find_element(By.XPATH, "//button[@type='submit']")
@@ -115,7 +115,7 @@ def test_case3_signup(driver):
 @pytest.mark.html
 def test_case4_signup(driver):
     # Điều hướng đến trang web cần kiểm tra
-    driver.get("http://127.0.0.1:50001/auth/signup")
+    driver.get("http://ec2-34-227-149-56.compute-1.amazonaws.com:50001/auth/signup")
     # Thực hiện các thao tác kiểm tra giao diện
     # kiểm tra các radio có tồn tại
     assert driver.find_element(By.ID, 'radio-normal')
@@ -128,7 +128,7 @@ def test_case4_signup(driver):
 @pytest.mark.html
 def test_case5_signup(driver):
     # Điều hướng đến trang web cần kiểm tra
-    driver.get("http://127.0.0.1:50001/auth/signup")
+    driver.get("http://ec2-34-227-149-56.compute-1.amazonaws.com:50001/auth/signup")
     # Thực hiện các thao tác kiểm tra giao diện
     # kiểm tra link đăng nhập có tồn tại không và đường link có truy cập được hay không
     loginlink = driver.find_element(By.LINK_TEXT, "Login")
