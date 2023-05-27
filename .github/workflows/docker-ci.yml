@@ -65,7 +65,6 @@ jobs:
             sudo apt-get install -y -q git
             cd TOEN430979_API-Dashboard
             sudo docker-compose -f ./docker-compose.yml down -v
-            sudo docker rm postgres-container  || true
-            sudo docker rmi duongvikhang/api-dashboard:v1.0.0  || true
-            sudo docker-compose -f ./docker-compose.yml up -d --build
-            
+            sudo docker rm /postgres-container -f || true
+            sudo docker rm /flask-container -f || true
+            sudo docker-compose -f ./docker-compose.yml up -d --build --remove-orphans
