@@ -68,3 +68,6 @@ jobs:
             sudo docker rm /postgres-container -f || true
             sudo docker rm /flask-container -f || true
             sudo docker-compose -f ./docker-compose.yml up -d --build --remove-orphans
+            
+    
+
