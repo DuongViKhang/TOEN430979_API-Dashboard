@@ -70,7 +70,7 @@ class SignUpTestSelenium:
 
 @pytest.fixture(scope="module")
 def signup_fixture(request):
-    signup = SignUpTestSelenium('http://ec2-34-239-74-119.compute-1.amazonaws.com:50001/auth/signup')
+    signup = SignUpTestSelenium('http://ec2-54-166-21-94.compute-1.amazonaws.com/auth/signup')
     yield signup
     signup.driver.close()
 

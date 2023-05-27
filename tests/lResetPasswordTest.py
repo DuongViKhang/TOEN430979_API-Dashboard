@@ -67,7 +67,7 @@ class ResetPasswordTestSelenium:
 
 @pytest.fixture(scope="module")
 def resetPassword_fixture(request):
-    resetPassword = ResetPasswordTestSelenium('http://ec2-34-239-74-119.compute-1.amazonaws.com:50001/auth/forgot-password')
+    resetPassword = ResetPasswordTestSelenium('http://ec2-54-166-21-94.compute-1.amazonaws.com/auth/forgot-password')
     yield resetPassword
     resetPassword.driver.close()
 
@@ -80,13 +80,13 @@ def test_case1(resetPassword_fixture):
 @pytest.mark.html
 def test_case2(resetPassword_fixture):
     #Input với otp không chính xác
-    case = {'otp': '123', 'password1': 'Khang123', 'password2': 'Khang123', 'screenshot_name': 'reset_testcase2'}
+    case = {'otp': '123456', 'password1': 'Khang123', 'password2': 'Khang123', 'screenshot_name': 'reset_testcase2'}
     resetPassword_fixture.run_test_case(case['otp'], case['password1'], case['password2'], case['screenshot_name'])
 
 @pytest.mark.html
 def test_case3(resetPassword_fixture):
     #Input không có điền mật khẩu
-    case = {'otp': '123', 'password1': '', 'password2': 'Khang123', 'screenshot_name': 'reset_testcase3'}
+    case = {'otp': '123456', 'password1': '', 'password2': 'Khang123', 'screenshot_name': 'reset_testcase3'}
     resetPassword_fixture.run_test_case(case['otp'], case['password1'], case['password2'], case['screenshot_name'])
 
 @pytest.mark.html
@@ -99,5 +99,5 @@ def test_case4(resetPassword_fixture):
 @pytest.mark.html
 def test_case5(resetPassword_fixture):
     #Input có mật khẩu khác với xác nhận mật khẩu
-    case = {'otp': '123', 'password1': 'Khang123', 'password2': 'Vikhang123', 'screenshot_name': 'reset_testcase5'}
+    case = {'otp': '123456', 'password1': 'Khang123', 'password2': 'Vikhang123', 'screenshot_name': 'reset_testcase5'}
     resetPassword_fixture.run_test_case(case['otp'], case['password1'], case['password2'], case['screenshot_name'])
