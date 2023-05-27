@@ -42,24 +42,19 @@ class LoginTestSelenium:
             i += 1
         self.driver.save_screenshot(os.path.join(image_dir, 'screen_shot_' + name + '(' + str(i) + ').png'))
 
-    def login(self, username, password, user):
+    def login(self, username, password):
         username_input = self.driver.find_element(By.ID, 'username')
         username_input.send_keys(username)
         sleep(1)
         password_input = self.driver.find_element(By.ID, 'password')
         password_input.send_keys(password)
         sleep(1)
-        user_checkbox = self.driver.find_element(By.ID, user)
-        if user_checkbox!=None:
-            if not user_checkbox.is_selected():
-                self.driver.execute_script("arguments[0].click();", user_checkbox)
-        sleep(1)    
        # Gửi phím Enter để kích hoạt nút
         login_button = self.driver.find_element(By.XPATH, "//button[@type='submit']")
         login_button.send_keys(Keys.ENTER)
         sleep(5)
         # So sánh địa chỉ URL trước và sau khi đăng nhập
-        if self.driver.current_url != 'http://ec2-34-239-74-119.compute-1.amazonaws.com:50001/auth/login?next=%2F':
+        if self.driver.current_url != 'http://ec2-54-166-21-94.compute-1.amazonaws.com/auth/login?next=%2F':
             logging.info("Đăng nhập thành công")
         else:
             try:
@@ -72,7 +67,7 @@ class LoginTestSelenium:
 
     def run_test_case(self, username, password, user, screenshot_name):
         logging.info("Running test case: %s", screenshot_name)
-        self.login(username, password, user)
+        self.login(username, password)
         self.get_screen_shot(screenshot_name)
         self.driver.delete_all_cookies()
         self.driver.refresh()
@@ -80,7 +75,7 @@ class LoginTestSelenium:
 
 @pytest.fixture(scope="module")
 def login_fixture(request):
-    login = LoginTestSelenium('http://ec2-34-239-74-119.compute-1.amazonaws.com:50001')
+    login = LoginTestSelenium('http://ec2-54-166-21-94.compute-1.amazonaws.com')
     yield login
     login.driver.close()
 
@@ -103,15 +98,15 @@ def test_case3(login_fixture):
     login_fixture.run_test_case(case['username'], case['password'], case['user'], case['screenshot_name'])
 
 @pytest.mark.html
-#Đăng nhập với username là số âm
+#Đăng nhập với username trống
 def test_case4(login_fixture):
-    case = {'username': '-1', 'password': '123loI', 'user': 'user', 'screenshot_name': 'testcase4'}
+    case = {'username': '', 'password': '123loI', 'user': 'user', 'screenshot_name': 'testcase4'}
     login_fixture.run_test_case(case['username'], case['password'], case['user'], case['screenshot_name'])
     
 @pytest.mark.html
-#Đăng nhập không nhập username đúng nhưng chữ hoa thường lẫn lộn
+#Đăng nhập không nhập mật khẩu
 def test_case5(login_fixture):
-    case = {'username': 'tEsT1', 'password': 'test', 'user': 'user', 'screenshot_name': 'testcase5'}
+    case = {'username': 'test1', 'password': '', 'user': 'user', 'screenshot_name': 'testcase5'}
     login_fixture.run_test_case(case['username'], case['password'], case['user'], case['screenshot_name'])
     
 

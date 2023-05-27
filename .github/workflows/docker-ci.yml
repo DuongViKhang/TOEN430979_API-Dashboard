@@ -1,9 +1,8 @@
 name: Build & Deploy API Dashboard
 
 on:
-  pull_request:
-    branches:
-      - main
+  push:
+    branches: [ "main" ]
 
 jobs:
   docker:

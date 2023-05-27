@@ -47,7 +47,7 @@ class EnterEmailTestSelenium:
         self.driver.execute_script("arguments[0].click();", sentOTP)
         time.sleep(5)
         # So sánh địa chỉ URL trước và sau khi đăng nhập
-        if self.driver.current_url != 'http://ec2-34-239-74-119.compute-1.amazonaws.com:50001/auth/reset-password':
+        if self.driver.current_url != 'http://ec2-54-166-21-94.compute-1.amazonaws.com/auth/reset-password':
             logging.info("Email chính xác, truy cập trang reset password thành công.")
         else:
             message = self.driver.find_element(By.XPATH, "//div[@class='alert alert-danger']")
@@ -64,7 +64,7 @@ class EnterEmailTestSelenium:
 
 @pytest.fixture(scope="module")
 def enterEmail_fixture(request):
-    enterEmail = EnterEmailTestSelenium('http://ec2-34-239-74-119.compute-1.amazonaws.com:50001/auth/forgot-password')
+    enterEmail = EnterEmailTestSelenium('http://ec2-54-166-21-94.compute-1.amazonaws.com/auth/forgot-password')
     yield enterEmail
     enterEmail.driver.close()
 
