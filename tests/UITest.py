@@ -378,7 +378,7 @@ def test_case4_index(driver):
     login_button.send_keys(Keys.ENTER)
     sleep(2)
     # Kiểm tra lịch chọn data trong tháng
-    calendar = driver.find_element(By.ID, "date")
+    calendar = driver.find_element(By.XPATH, "//input[@type='date']")
     assert calendar.is_displayed()
     
     #Xóa các cookie và refresh lại trang
