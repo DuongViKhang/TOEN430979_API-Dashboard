@@ -1,8 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 import pytest
-import requests
-import logging
 from time import sleep
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options

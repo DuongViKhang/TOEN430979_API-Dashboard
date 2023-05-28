@@ -156,7 +156,8 @@ docker-compose -f docker-compose.yml down -v
 1. Windows
 
 ```
-pytest
+pytest -v --html=logs/ui_report.html UITest.py
+pytest -v --html=logs/login_report.html LoginTest.py
 ```
 
 2. Linux
