@@ -32,6 +32,7 @@ jobs:
           python -m pytest -v --html=enteremail_report.html lEnterEmailTest.py
           python -m pytest -v --html=reset_report.html lResetPasswordTest.py
           python -m pytest -v --html=adData_report.html AdminDataTest.py
+          python -m pytest -v --html=userManager_report.html UserManagerTest.py
         
       - name: Upload Test Reports
         uses: actions/upload-artifact@v2
